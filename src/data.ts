@@ -44,7 +44,6 @@ export const todos: Todo[] = [
     createdAt: "2025-05-04T10:00:00Z",
     dueDate: "2025-05-07T17:00:00Z",
     priority: "high",
-    notes: "Include team feedback section",
     tags: ["work", "deadline"],
     category: "Work",
     order: 4,
