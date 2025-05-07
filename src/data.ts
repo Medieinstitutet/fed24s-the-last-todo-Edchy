@@ -33,7 +33,6 @@ export const todos: Todo[] = [
     dueDate: "2025-05-06T20:00:00Z",
     priority: "low",
     notes: "Wish her happy birthday",
-    tags: ["family"],
     category: "Personal",
     order: 3,
   },

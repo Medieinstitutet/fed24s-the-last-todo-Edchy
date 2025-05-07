@@ -114,7 +114,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .badge {
+    @apply inline-block text-xs mr-2 px-2.5 py-0.5 rounded
   }
 }
