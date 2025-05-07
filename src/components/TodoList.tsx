@@ -1,5 +1,6 @@
-import { Swapy, utils, SlotItemMap, createSwapy } from "swapy";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { SlotItemMapArray, Swapy, utils } from "swapy";
+import { createSwapy } from "swapy";
 import TodoItem from "./TodoItem";
 
 import { Todo } from "@/types/Todo";
@@ -9,33 +10,63 @@ type Props = {
 };
 //
 const TodoList = ({ todos }: Props) => {
-  const swapy = useRef<Swapy | null>(null);
-  const container = useRef(null);
+  const [items, setItems] = useState<Todo[]>(todos);
+  const [slotItemMap, setSlotItemMap] = useState<SlotItemMapArray>(
+    utils.initSlotItemMap(items, "id")
+  );
+  const slottedItems = useMemo(
+    () => utils.toSlottedItems(items, "id", slotItemMap),
+    [items, slotItemMap]
+  );
+  const swapyRef = useRef<Swapy | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(
+    () =>
+      utils.dynamicSwapy(
+        swapyRef.current,
+        items,
+        "id",
+        slotItemMap,
+        setSlotItemMap
+      ),
+    [items]
+  );
 
   useEffect(() => {
-    // If container element is loaded
-    if (container.current) {
-      swapy.current = createSwapy(container.current);
+    swapyRef.current = createSwapy(containerRef.current!, {
+      manualSwap: true,
+      // animation: 'dynamic'
+      // autoScrollOnDrag: true,
+      // swapMode: 'drop',
+      // enabled: true,
+      // dragAxis: 'x',
+      // dragOnHold: true
+    });
 
-      // Your event listeners
-      swapy.current.onSwap((event) => {
-        console.log("swap", event);
-      });
-    }
+    swapyRef.current.onSwap((event) => {
+      setSlotItemMap(event.newSlotItemMap.asArray);
+    });
 
     return () => {
-      // Destroy the swapy instance on component destroy
-      swapy.current?.destroy();
+      swapyRef.current?.destroy();
     };
   }, []);
+
   return (
-    <section>
-      <ul ref={container}>
-        {todos.map((todo) => (
-          <TodoItem todo={todo} />
+    <div className="container" ref={containerRef}>
+      <div className="items">
+        {slottedItems.map(({ slotId, itemId, item }) => (
+          <div className="slot" key={slotId} data-swapy-slot={slotId}>
+            {item && (
+              <div className="item" data-swapy-item={itemId} key={itemId}>
+                <TodoItem todo={item} />
+              </div>
+            )}
+          </div>
         ))}
-      </ul>
-    </section>
+      </div>
+    </div>
   );
 };
 

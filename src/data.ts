@@ -2,7 +2,7 @@ import { Todo } from "./types/Todo";
 
 export const todos: Todo[] = [
   {
-    id: 1,
+    id: "1",
     title: "Buy groceries",
     completed: false,
     createdAt: "2025-05-06T08:00:00Z",
@@ -14,7 +14,7 @@ export const todos: Todo[] = [
     order: 1,
   },
   {
-    id: 2,
+    id: "2",
     title: "Finish portfolio website",
     completed: false,
     createdAt: "2025-05-05T14:30:00Z",
@@ -26,7 +26,7 @@ export const todos: Todo[] = [
     order: 2,
   },
   {
-    id: 3,
+    id: "3",
     title: "Call mom",
     completed: false,
     createdAt: "2025-05-06T09:15:00Z",
@@ -37,7 +37,7 @@ export const todos: Todo[] = [
     order: 3,
   },
   {
-    id: 4,
+    id: "4",
     title: "Submit project report",
     completed: false,
     createdAt: "2025-05-04T10:00:00Z",

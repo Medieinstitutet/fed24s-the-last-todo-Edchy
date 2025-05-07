@@ -36,8 +36,8 @@ const TodoItem = ({ todo }: Props) => {
     order,
   } = todo;
   return (
-    <li data-swapy-slot={id} className="my-1 ">
-      <Collapsible data-swapy-item={id} className="w-full">
+    <div className="my-1 ">
+      <Collapsible className="w-full">
         <Card className="">
           <CollapsibleTrigger className="cursor-pointer w-full h-full text-left py-2">
             <CardHeader className="grid grid-cols-[1fr_auto_auto_auto] items-center p-6 gap-0">
@@ -85,7 +85,7 @@ const TodoItem = ({ todo }: Props) => {
           </CollapsibleContent>
         </Card>
       </Collapsible>
-    </li>
+    </div>
   );
 };
 
