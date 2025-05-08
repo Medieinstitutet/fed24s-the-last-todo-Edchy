@@ -30,7 +30,7 @@ export const todos: Todo[] = [
     title: "Call mom",
     completed: false,
     createdAt: "2025-05-06T09:15:00Z",
-    dueDate: "2025-05-06T20:00:00Z",
+    dueDate: "2025-05-09T20:00:00Z",
     priority: "low",
     notes: "Wish her happy birthday",
     category: "Personal",

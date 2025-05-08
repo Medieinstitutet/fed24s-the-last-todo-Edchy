@@ -1,22 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { SlotItemMapArray, Swapy, utils } from "swapy";
-import { createSwapy } from "swapy";
-import TodoItem from "./TodoItem";
+import { SlotItemMapArray, Swapy, utils, createSwapy } from "swapy";
+// import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+import TodoItem from "./TodoItem";
 import { Todo } from "@/types/Todo";
 
 type Props = {
   todos: Todo[];
+  onDeleteTodo: (id: string) => void;
 };
 //
-const TodoList = ({ todos }: Props) => {
-  const [items, setItems] = useState<Todo[]>(todos);
+const TodoList = ({ todos, onDeleteTodo }: Props) => {
   const [slotItemMap, setSlotItemMap] = useState<SlotItemMapArray>(
-    utils.initSlotItemMap(items, "id")
+    utils.initSlotItemMap(todos, "id")
   );
+  // const [parent, enableAnimations] = useAutoAnimate({ duration: 1000 });
+
   const slottedItems = useMemo(
-    () => utils.toSlottedItems(items, "id", slotItemMap),
-    [items, slotItemMap]
+    () => utils.toSlottedItems(todos, "id", slotItemMap),
+    [todos, slotItemMap]
   );
   const swapyRef = useRef<Swapy | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,23 +27,23 @@ const TodoList = ({ todos }: Props) => {
     () =>
       utils.dynamicSwapy(
         swapyRef.current,
-        items,
+        todos,
         "id",
         slotItemMap,
         setSlotItemMap
       ),
-    [items]
+    [todos]
   );
 
   useEffect(() => {
     swapyRef.current = createSwapy(containerRef.current!, {
       manualSwap: true,
-      // animation: 'dynamic'
-      // autoScrollOnDrag: true,
-      // swapMode: 'drop',
+      animation: "spring",
+      autoScrollOnDrag: true,
+      // swapMode: "drop",
       // enabled: true,
-      // dragAxis: 'x',
-      // dragOnHold: true
+      dragAxis: "y",
+      // dragOnHold: true,
     });
 
     swapyRef.current.onSwap((event) => {
@@ -55,17 +57,17 @@ const TodoList = ({ todos }: Props) => {
 
   return (
     <div className="container" ref={containerRef}>
-      <div className="items">
+      <ul className="items flex flex-col gap-2">
         {slottedItems.map(({ slotId, itemId, item }) => (
-          <div className="slot" key={slotId} data-swapy-slot={slotId}>
+          <li className="slot" key={slotId} data-swapy-slot={slotId}>
             {item && (
               <div className="item" data-swapy-item={itemId} key={itemId}>
-                <TodoItem todo={item} />
+                <TodoItem todo={item} onDeleteTodo={onDeleteTodo} />
               </div>
             )}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
