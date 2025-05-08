@@ -36,7 +36,7 @@ export default function Countdown({ targetDate }: Props) {
   return (
     <div
       className={`${
-        isPastTime(targetDate.toISOString())
+        !isNaN(targetDate.getTime()) && isPastTime(targetDate.toISOString())
           ? "text-red-400"
           : "text-emerald-400"
       } flex items-center gap-0.5 font-mono text-xs`}

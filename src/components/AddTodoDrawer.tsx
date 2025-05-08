@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { Todo } from "@/types/Todo";
+import { BorderTrail } from "@/components/ui/border-trail";
 
 type Props = {
   onAddTodo: (todo: Todo) => void;
@@ -21,7 +22,17 @@ export const AddTodoDrawer = ({ onAddTodo }: Props) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className="bg-emerald-400 text-white py-8" variant="outline">
+        <Button
+          className="cursor-pointer bg-emerald-400 animate-pulse relative text-white py-8"
+          variant="outline"
+        >
+          <BorderTrail
+            style={{
+              boxShadow:
+                "0px 0px 60px 30px rgb(25 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(0 0 0 / 50%)",
+            }}
+            size={100}
+          />
           <CirclePlus />
           New Todo
         </Button>

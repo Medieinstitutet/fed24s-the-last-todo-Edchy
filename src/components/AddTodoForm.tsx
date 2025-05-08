@@ -77,7 +77,6 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
 
     onAddTodo?.(formattedValues);
     onComplete?.();
-    console.log(formattedValues);
   }
 
   return (

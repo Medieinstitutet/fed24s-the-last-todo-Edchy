@@ -73,6 +73,9 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
           </li>
         ))}
       </ul>
+      <p className="text-xs pl-2 py-2 text-muted-foreground">
+        drag to rearrange
+      </p>
     </div>
   );
 };

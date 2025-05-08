@@ -147,7 +147,9 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
             {/* <p className="text-muted-foreground">
               {completed ? "Completed 🎉" : "Not completed 😓"}
             </p> */}
-            {!completed && <Countdown targetDate={new Date(dueDate || "")} />}
+            {!completed && dueDate && (
+              <Countdown targetDate={new Date(dueDate || "")} />
+            )}
           </CardFooter>
         </CollapsibleContent>
       </Card>
