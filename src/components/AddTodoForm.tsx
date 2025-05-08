@@ -65,7 +65,6 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const formattedValues = {
       id: `todo-${todoId}-${Date.now()}`,
@@ -76,8 +75,6 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
       dueDate: values.dueDate ? values.dueDate.toISOString() : "",
     };
 
-    // Log the formatted values
-    console.log("Todo to add:", formattedValues);
     onAddTodo?.(formattedValues);
     onComplete?.();
   }

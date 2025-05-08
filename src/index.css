@@ -121,7 +121,7 @@
   }
 
   .badge {
-    @apply inline-block text-xs mr-2 px-2.5 py-0.5 rounded
+    @apply inline-block text-xs px-2.5 py-0.5 rounded
   }
 
   .slot[data-swapy-highlighted] {

@@ -21,7 +21,7 @@ export const AddTodoDrawer = ({ onAddTodo }: Props) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className="bg-emerald-400 text-white" variant="outline">
+        <Button className="bg-emerald-400 text-white py-8" variant="outline">
           <CirclePlus />
           New Todo
         </Button>
@@ -34,13 +34,6 @@ export const AddTodoDrawer = ({ onAddTodo }: Props) => {
           </DrawerDescription>
         </DrawerHeader>
         <AddTodoForm onComplete={() => setOpen(false)} onAddTodo={onAddTodo} />
-        {/* <DrawerFooter>
-          <DrawerClose asChild>
-            <Button className="" variant="outline">
-              Cancel
-            </Button>
-          </DrawerClose>
-        </DrawerFooter> */}
       </DrawerContent>
     </Drawer>
   );

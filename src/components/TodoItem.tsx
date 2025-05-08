@@ -1,7 +1,6 @@
 import { Todo } from "../types/Todo";
 import { ChevronsUpDown, Trash2, Check, X } from "lucide-react";
 import { formatDistanceToNow, formatDistance } from "date-fns";
-import { Button } from "@/components/ui/button";
 
 import {
   Card,
@@ -43,11 +42,13 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
     <Collapsible className="w-full">
       <Card
         className={`${
-          completed ? "bg-linear-65 from-black to-indigo-500" : "bg-neutral-900"
-        } text-white px-4 border-0`}
+          completed
+            ? "bg-linear-65 from-neutral-900 to-indigo-500"
+            : "bg-neutral-900"
+        } text-white px-4 border-1`}
       >
         <CollapsibleTrigger className="w-full h-full text-left py-2">
-          <CardHeader className="grid grid-cols-[500px_50px_auto] items-center gap-0 p-0">
+          <CardHeader className="grid grid-cols-[1fr_auto] md:grid-cols-[400px_50px_auto] items-center gap-2 md:gap-0 p-0">
             <div className="flex items-center gap-2">
               <ChevronsUpDown
                 size={20}
@@ -70,9 +71,18 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
                 </div> */}
             </div>
 
-            <span className="h-4 w-4 rounded-full bg-chart-3 text-neutral-100 mr-4"></span>
+            {/* lets do some nested ternaries :D */}
+            <div
+              className={`${
+                priority === "high"
+                  ? "bg-red-400"
+                  : priority === "medium"
+                  ? "bg-yellow-400"
+                  : "bg-green-400"
+              } h-4 w-4 rounded-full mr-4`}
+            ></div>
             <div className="flex justify-end gap-2">
-              <span className="badge bg-chart-1 text-neutral-100">
+              <span className="badge mr-auto md:mr-0 bg-neutral-800 text-neutral-100 ">
                 {category}
               </span>
             </div>
@@ -81,21 +91,14 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
 
         <CollapsibleContent>
           <CardContent className="flex flex-col gap-2 px-0">
-            <div>
+            <div className="flex gap-2">
               {tags &&
                 tags.length > 0 &&
                 tags.map(({ label }) => (
-                  <span key={label} className="badge bg-chart-4 ">
+                  <span key={label} className="badge self-start bg-neutral-700">
                     {label}
                   </span>
                 ))}
-            </div>
-            <div className="flex items-center-safe justify-between">
-              {notes && (
-                <CardDescription className="text-white text-md">
-                  {notes}
-                </CardDescription>
-              )}
               <div className="flex gap-2 items-center ml-auto">
                 <button
                   onClick={() =>
@@ -113,10 +116,18 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
                 </button>
               </div>
             </div>
+
+            <div className="flex items-center-safe justify-between">
+              {notes && (
+                <CardDescription className="text-white text-md">
+                  {notes}
+                </CardDescription>
+              )}
+            </div>
           </CardContent>
           <CardFooter className="flex justify-between mt-2 gap-2 px-0">
             <div className="flex gap-2">
-              <p className="text-sm ">
+              <p className="text-sm text-muted-foreground">
                 Created{" "}
                 {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
               </p>
@@ -133,7 +144,9 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
                 </p>
               )}
             </div>
-            <p>{completed ? "Completed 🎉" : "Not completed 😓"}</p>
+            <p className="text-muted-foreground">
+              {completed ? "Completed 🎉" : "Not completed 😓"}
+            </p>
           </CardFooter>
         </CollapsibleContent>
       </Card>
