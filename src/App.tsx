@@ -10,12 +10,25 @@ export default function App() {
   const handleDeleteTodo = (id: string) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
+  const handleAddTodo = (newTodo: Todo) => {
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  };
+
+  const handleUpdateTodo = (updatedTodo: Todo) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+    );
+  };
 
   return (
     <div className="">
-      <main className="w-full max-w-2xl mx-auto p-4 flex flex-col gap-12">
-        <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} />
-        <AddTodoDrawer />
+      <main className="w-full max-w-3xl mx-auto p-4 flex flex-col gap-12">
+        <TodoList
+          todos={todos}
+          onDeleteTodo={handleDeleteTodo}
+          onUpdateTodo={handleUpdateTodo}
+        />
+        <AddTodoDrawer onAddTodo={handleAddTodo} />
       </main>
     </div>
   );

@@ -9,9 +9,8 @@ export const todos: Todo[] = [
     dueDate: "2025-05-06T18:00:00Z",
     priority: "high",
     notes: "Remember oat milk and eggs",
-    tags: ["shopping", "errands"],
+    tags: [{ label: "Work", value: "work" }],
     category: "Personal",
-    order: 1,
   },
   {
     id: "2",
@@ -21,9 +20,8 @@ export const todos: Todo[] = [
     dueDate: "2025-05-10T23:59:00Z",
     priority: "medium",
     notes: "Add contact form and optimize for mobile",
-    tags: ["work", "dev"],
+    tags: [{ label: "Work", value: "work" }],
     category: "Work",
-    order: 2,
   },
   {
     id: "3",
@@ -34,7 +32,6 @@ export const todos: Todo[] = [
     priority: "low",
     notes: "Wish her happy birthday",
     category: "Personal",
-    order: 3,
   },
   {
     id: "4",
@@ -43,8 +40,10 @@ export const todos: Todo[] = [
     createdAt: "2025-05-04T10:00:00Z",
     dueDate: "2025-05-07T17:00:00Z",
     priority: "high",
-    tags: ["work", "deadline"],
+    tags: [
+      { label: "Work", value: "work" },
+      { label: "Family", value: "Family" },
+    ],
     category: "Work",
-    order: 4,
   },
 ];

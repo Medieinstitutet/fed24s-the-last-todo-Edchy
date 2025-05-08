@@ -475,6 +475,7 @@ const MultipleSelector = React.forwardRef<
                 <Badge
                   key={option.value}
                   className={cn(
+                    "bg-emerald-500 hover:bg-emerald-600 text-white",
                     "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground",
                     "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
                     badgeClassName
@@ -500,7 +501,7 @@ const MultipleSelector = React.forwardRef<
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                    <X className="text-white h-3 w-3 hover:text-foreground" />
                   </button>
                 </Badge>
               );
@@ -555,14 +556,14 @@ const MultipleSelector = React.forwardRef<
                   "hidden"
               )}
             >
-              <X />
+              <X size={20} />
             </button>
           </div>
         </div>
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full max-h-[200px] overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
+              className="absolute top-1 z-10 w-full max-h-[100px] overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
               onMouseLeave={() => {
                 setOnScrollbar(false);
               }}

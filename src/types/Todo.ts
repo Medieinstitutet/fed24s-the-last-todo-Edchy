@@ -6,9 +6,11 @@ export type Todo = {
   dueDate: string;
   priority: Priority;
   notes?: string;
-  tags?: string[];
+  tags?: Tag[];
   category?: string;
-  order: number;
 };
-
-type Priority = "low" | "medium" | "high";
+interface Tag {
+  label: string;
+  value: string;
+}
+export type Priority = "low" | "medium" | "high";

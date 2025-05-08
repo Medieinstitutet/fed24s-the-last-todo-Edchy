@@ -1,18 +1,17 @@
 import MultipleSelector, { Option } from "@/components/ui/MultipleSelector";
-import { Tag } from "lucide-react";
 
 const OPTIONS: Option[] = [
-  { label: "nextjs", value: "nextjs" },
-  { label: "React", value: "react" },
-  { label: "Remix", value: "remix" },
-  { label: "Vite", value: "vite" },
-  { label: "Nuxt", value: "nuxt" },
-  { label: "Vue", value: "vue" },
-  { label: "Svelte", value: "svelte" },
-  { label: "Angular", value: "angular" },
-  { label: "Ember", value: "ember", disable: true },
-  { label: "Gatsby", value: "gatsby", disable: true },
-  { label: "Astro", value: "astro" },
+  { label: "Errands", value: "errands" },
+  { label: "Work", value: "work" },
+  { label: "Groceries", value: "groceries" },
+  { label: "Home", value: "home" },
+  { label: "Fitness", value: "fitness" },
+  { label: "Finance", value: "finance" },
+  { label: "Study", value: "study" },
+  { label: "Shopping", value: "shopping" },
+  { label: "Calls", value: "calls" },
+  { label: "Appointments", value: "appointments" },
+  { label: "Miscellaneous", value: "misc" },
 ];
 
 interface TagSelectorProps {

@@ -1,10 +1,8 @@
 import AddTodoForm from "./AddTodoForm";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -12,8 +10,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
+import { Todo } from "@/types/Todo";
 
-export const AddTodoDrawer = () => {
+type Props = {
+  onAddTodo: (todo: Todo) => void;
+};
+
+export const AddTodoDrawer = ({ onAddTodo }: Props) => {
   const [open, setOpen] = useState(false);
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -30,7 +33,7 @@ export const AddTodoDrawer = () => {
             You can drag and drop the todos to reorder them.
           </DrawerDescription>
         </DrawerHeader>
-        <AddTodoForm onComplete={() => setOpen(false)} />
+        <AddTodoForm onComplete={() => setOpen(false)} onAddTodo={onAddTodo} />
         {/* <DrawerFooter>
           <DrawerClose asChild>
             <Button className="" variant="outline">

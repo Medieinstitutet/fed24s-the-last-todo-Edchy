@@ -26,6 +26,7 @@ export default tseslint.config(
       // Set unused variables to warning (yellow) instead of error (red)
       "@typescript-eslint/no-unused-vars": "warn",
       "no-unused-vars": "warn",
+      ignoreImports: true,
     },
   }
 );

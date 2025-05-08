@@ -8,9 +8,10 @@ import { Todo } from "@/types/Todo";
 type Props = {
   todos: Todo[];
   onDeleteTodo: (id: string) => void;
+  onUpdateTodo: (updatedTodo: Todo) => void;
 };
 //
-const TodoList = ({ todos, onDeleteTodo }: Props) => {
+const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
   const [slotItemMap, setSlotItemMap] = useState<SlotItemMapArray>(
     utils.initSlotItemMap(todos, "id")
   );
@@ -62,7 +63,11 @@ const TodoList = ({ todos, onDeleteTodo }: Props) => {
           <li className="slot" key={slotId} data-swapy-slot={slotId}>
             {item && (
               <div className="item" data-swapy-item={itemId} key={itemId}>
-                <TodoItem todo={item} onDeleteTodo={onDeleteTodo} />
+                <TodoItem
+                  todo={item}
+                  onDeleteTodo={onDeleteTodo}
+                  onUpdateTodo={onUpdateTodo}
+                />
               </div>
             )}
           </li>
