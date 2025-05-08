@@ -41,6 +41,19 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --font-display: 'Superclarendon', 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif;
+  --font-body: 'Source Sans Pro', 'Source Code Pro', 'Source Serif Pro', 'Source Serif', 'Source Code', 'Source Sans', sans-serif;
+
+  --font-hand: 'Segoe Print',
+    'Bradley Hand',
+    Chilanka,
+    TSCu_Comic,
+    casual,
+    cursive;
+
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

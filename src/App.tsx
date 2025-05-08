@@ -19,7 +19,6 @@ export default function App() {
       prevTodos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
     );
   };
-
   return (
     <div className="">
       <main className="w-full max-w-3xl mx-auto p-4 flex flex-col gap-12">

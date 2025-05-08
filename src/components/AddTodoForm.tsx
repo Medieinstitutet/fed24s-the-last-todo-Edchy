@@ -36,7 +36,7 @@ const formSchema = z.object({
     message: "Mooooar letters please.",
   }),
   dueDate: z.date().optional(),
-  description: z.string().optional(),
+  notes: z.string().optional(),
   priority: z.string(),
   category: z.string().min(1, {
     message: "Select a category goddammit.",
@@ -59,7 +59,7 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
       title: "",
       dueDate: undefined,
       priority: "medium",
-      description: "",
+      notes: "",
       category: "",
       tags: [],
     },
@@ -77,6 +77,7 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
 
     onAddTodo?.(formattedValues);
     onComplete?.();
+    console.log(formattedValues);
   }
 
   return (
@@ -115,7 +116,7 @@ export function AddTodoForm({ onComplete, onAddTodo }: AddTodoFormProps) {
           />
           <FormField
             control={form.control}
-            name="description"
+            name="notes"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description (optional)</FormLabel>

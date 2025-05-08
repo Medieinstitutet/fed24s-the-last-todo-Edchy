@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -9,6 +9,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DatePickerProps {
   date?: Date;
@@ -30,7 +37,25 @@ export default function DatePicker({ date, onDateChange }: DatePickerProps) {
           {date ? format(date, "PPP") : <span>Pick a due date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent
+        className="flex w-auto flex-col space-y-2 p-2"
+        // className="w-auto p-0"
+      >
+        <Select
+          onValueChange={(value) =>
+            onDateChange(addDays(new Date(), parseInt(value)))
+          }
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent position="popper">
+            <SelectItem value="0">Today</SelectItem>
+            <SelectItem value="1">Tomorrow</SelectItem>
+            <SelectItem value="3">In 3 days</SelectItem>
+            <SelectItem value="7">In a week</SelectItem>
+          </SelectContent>
+        </Select>
         <Calendar
           mode="single"
           selected={date}

@@ -1,7 +1,7 @@
 import { Todo } from "../types/Todo";
 import { ChevronsUpDown, Trash2, Check, X } from "lucide-react";
 import { formatDistanceToNow, formatDistance } from "date-fns";
-
+import Countdown from "./Countdown";
 import {
   Card,
   CardContent,
@@ -62,7 +62,7 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
                   isPastTime(dueDate) && !completed
                     ? "text-red-400 "
                     : "text-white"
-                } ${completed && "line-through"} flex-1`}
+                } ${completed && "line-through"} flex-1 font-display`}
               >
                 {title}
               </CardTitle>
@@ -117,9 +117,9 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
               </div>
             </div>
 
-            <div className="flex items-center-safe justify-between">
+            <div className="flex items-center-safe justify-between mb-8 mt-4">
               {notes && (
-                <CardDescription className="text-white text-md">
+                <CardDescription className="text-white text-md font-hand text-xl">
                   {notes}
                 </CardDescription>
               )}
@@ -144,9 +144,10 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
                 </p>
               )}
             </div>
-            <p className="text-muted-foreground">
+            {/* <p className="text-muted-foreground">
               {completed ? "Completed 🎉" : "Not completed 😓"}
-            </p>
+            </p> */}
+            {!completed && <Countdown targetDate={new Date(dueDate || "")} />}
           </CardFooter>
         </CollapsibleContent>
       </Card>
