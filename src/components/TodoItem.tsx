@@ -94,12 +94,16 @@ const TodoItem = ({ todo, onDeleteTodo }: Props) => {
                 Created{" "}
                 {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
               </p>
-              <p className="text-sm text-muted-foreground">
-                Due{" "}
-                {formatDistance(new Date(dueDate), new Date(), {
-                  addSuffix: true,
-                })}
-              </p>{" "}
+
+              {dueDate && (
+                <p className="text-sm text-muted-foreground">
+                  Due{" "}
+                  {formatDistance(new Date(dueDate), new Date(), {
+                    addSuffix: true,
+                  })}
+                </p>
+              )}
+
               <p>{completed ? "completed" : "not completed"}</p>
               <p>order {order}</p>
             </CardFooter>

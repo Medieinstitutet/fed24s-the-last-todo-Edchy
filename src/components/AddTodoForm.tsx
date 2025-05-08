@@ -17,20 +17,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DatePicker from "./DatePicker";
 import { useId } from "react";
+import Combobox from "./Combobox";
+import TagSelector from "./TagSelector";
+import { Tag } from "lucide-react";
+
+interface AddTodoFormProps {
+  onComplete?: () => void;
+}
 
 const formSchema = z.object({
   title: z.string().min(2, {
     message: "Title must be at least 2 characters.",
   }),
   dueDate: z.date().optional(),
+  description: z.string().optional(),
   priority: z.string(),
+  category: z.string().optional(),
+  tags: z
+    .array(
+      z.object({
+        label: z.string(),
+        value: z.string(),
+      })
+    )
+    .optional(),
 });
 
-export function AddTodoForm() {
+export function AddTodoForm({ onComplete }: AddTodoFormProps) {
   const todoId = useId();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,6 +57,9 @@ export function AddTodoForm() {
       title: "",
       dueDate: undefined,
       priority: "medium",
+      description: "",
+      category: "",
+      tags: [],
     },
   });
 
@@ -53,6 +75,7 @@ export function AddTodoForm() {
 
     // Log the formatted values
     console.log("Todo to add:", formattedValues);
+    onComplete?.();
   }
 
   return (
@@ -74,7 +97,47 @@ export function AddTodoForm() {
             </FormItem>
           )}
         />
-        <div className="grid grid-cols-2 gap-4">
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description (optional)</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Add more details..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags (optional)</FormLabel>
+              <FormControl>
+                <TagSelector value={field.value} onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="grid  gap-4">
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category (optional)</FormLabel>
+                <FormControl>
+                  <Combobox value={field.value} onChange={field.onChange} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="priority"
@@ -100,7 +163,6 @@ export function AddTodoForm() {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="dueDate"
@@ -119,7 +181,7 @@ export function AddTodoForm() {
           />
         </div>
         <Button
-          className="cursor-pointer bg-emerald-500 rounded-md w-full mx-auto border-1 py-5"
+          className="cursor-pointer bg-emerald-500 rounded-md w-full mx-auto border-1 py-5 z-10"
           type="submit"
         >
           Add Todo ✨
