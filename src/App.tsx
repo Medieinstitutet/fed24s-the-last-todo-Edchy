@@ -5,6 +5,8 @@ import { Todo } from "./types/Todo";
 import { AddTodoDrawer } from "./components/AddTodoDrawer";
 import { toast, Toaster } from "sonner";
 import { FilterTodos } from "./components/FilterTodos";
+import { addHours, parseISO, isAfter, isBefore } from "date-fns";
+import NikeLogo from "./components/NikeLogo";
 
 export default function App() {
   const [allTodos, setAllTodos] = useState<Todo[]>(
@@ -13,22 +15,44 @@ export default function App() {
       : initialTodos
   );
   const [filteredTodos, setFilteredTodos] = useState<Todo[]>(allTodos);
+  const [currentFilter, setCurrentFilter] = useState<string>("all");
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(allTodos));
-    setFilteredTodos(allTodos);
+    applyFilter(currentFilter);
   }, [allTodos]);
+
+  const applyFilter = (filter: string) => {
+    let result = [...allTodos];
+
+    if (filter === "completed") {
+      result = result.filter((t) => !t.completed);
+    } else if (filter === "priority") {
+      result = result.filter((t) => t.priority === "high");
+    } else if (filter === "isExpiringSoon") {
+      const now = new Date();
+      const oneDayFromNow = addHours(now, 24);
+      result = result.filter((t) => {
+        if (!t.dueDate) return false;
+        const dueDate = parseISO(t.dueDate);
+        return isAfter(dueDate, now) && isBefore(dueDate, oneDayFromNow);
+      });
+    }
+
+    setFilteredTodos(result);
+  };
 
   const handleDeleteTodo = (id: string) => {
     setAllTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     toast("Todo deleted", {
-      description: "Some description",
+      description: "Now you can do something else.",
     });
   };
+
   const handleAddTodo = (newTodo: Todo) => {
     setAllTodos((prevTodos) => [...prevTodos, newTodo]);
     toast("Todo added", {
-      description: "Some description",
+      description: "Now you can do it.",
       action: {
         label: "Undo",
         onClick: () => handleDeleteTodo(newTodo.id),
@@ -43,31 +67,25 @@ export default function App() {
   };
 
   const handleSortTodos = (filter: string) => {
-    console.log("Sorting todos by:", filter);
-
-    let result = [...allTodos];
-
-    if (filter === "completed") {
-      result = result.filter((t) => !t.completed);
-    } else if (filter === "priority") {
-      result = result.filter((t) => t.priority === "high");
-    } else if (filter === "dueDate") {
-      result = result.filter((t) => t.dueDate !== "");
-    }
-
-    setFilteredTodos(result);
+    setCurrentFilter(filter);
+    applyFilter(filter);
   };
 
   return (
     <div className="">
       <Toaster />
-      <main className="w-full max-w-3xl mx-auto p-4 flex flex-col">
+      <div className="flex justify-between px-4">
+        <NikeLogo color="white" />
+        <h1 className="text-l py-4">Just todo it again...</h1>
+      </div>
+      <main className="w-full max-w-3xl mx-auto p-4 flex flex-col justify-center gap-2">
         <TodoList
           todos={filteredTodos}
           onDeleteTodo={handleDeleteTodo}
           onUpdateTodo={handleUpdateTodo}
         />
-        <FilterTodos onSortTodos={handleSortTodos} />
+
+        <FilterTodos className="self-end" onSortTodos={handleSortTodos} />
         <AddTodoDrawer onAddTodo={handleAddTodo} />
       </main>
     </div>

@@ -24,17 +24,12 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
   const swapyRef = useRef<Swapy | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(
-    () =>
-      utils.dynamicSwapy(
-        swapyRef.current,
-        todos,
-        "id",
-        slotItemMap,
-        setSlotItemMap
-      ),
-    [todos]
-  );
+  useEffect(() => {
+    const newMap = utils.initSlotItemMap(todos, "id");
+    setSlotItemMap(newMap);
+
+    utils.dynamicSwapy(swapyRef.current, todos, "id", newMap, setSlotItemMap);
+  }, [todos]);
 
   useEffect(() => {
     swapyRef.current = createSwapy(containerRef.current!, {
@@ -43,7 +38,7 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
       autoScrollOnDrag: true,
       // swapMode: "drop",
       // enabled: true,
-      dragAxis: "y",
+      // dragAxis: "y",
       // dragOnHold: true,
     });
 
@@ -55,7 +50,13 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
       swapyRef.current?.destroy();
     };
   }, []);
-
+  if (!todos.length) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-muted-foreground">All done! Just relax</p>
+      </div>
+    );
+  }
   return (
     <div className="container" ref={containerRef}>
       <ul className="items flex flex-col gap-2">
@@ -74,7 +75,8 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
         ))}
       </ul>
       <p className="text-xs pl-2 py-2 text-muted-foreground">
-        drag to rearrange
+        drag to rearrange (but dont do it after filtering plz, there is a nasty
+        swapy bug 🐞 🫢)
       </p>
     </div>
   );

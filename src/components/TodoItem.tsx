@@ -43,8 +43,8 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
       <Card
         className={`${
           completed
-            ? "bg-linear-65 from-neutral-900 to-indigo-500"
-            : "bg-neutral-900"
+            ? "bg-linear-65 from-indigo-800 to-black border-indigo-800"
+            : "bg-neutral-950 border-neutral-700"
         } text-white px-4 border-1`}
       >
         <CollapsibleTrigger className="w-full h-full text-left py-2">
@@ -82,7 +82,7 @@ const TodoItem = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
               } h-4 w-4 rounded-full mr-4`}
             ></div>
             <div className="flex justify-end gap-2">
-              <span className="badge mr-auto md:mr-0 bg-neutral-800 text-neutral-100 ">
+              <span className="badge mr-auto md:mr-0 bg-indigo-800 text-neutral-100 ">
                 {category}
               </span>
             </div>
