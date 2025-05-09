@@ -25,31 +25,48 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!containerRef.current) return;
     const newMap = utils.initSlotItemMap(todos, "id");
     setSlotItemMap(newMap);
 
-    utils.dynamicSwapy(swapyRef.current, todos, "id", newMap, setSlotItemMap);
-  }, [todos]);
+    if (!swapyRef.current) {
+      swapyRef.current = createSwapy(containerRef.current, {
+        manualSwap: true,
+        animation: "spring",
+        autoScrollOnDrag: true,
+        // swapMode: "drop",
+        // enabled: true,
+        // dragAxis: "y",
+        // dragOnHold: true,
+      });
 
-  useEffect(() => {
-    swapyRef.current = createSwapy(containerRef.current!, {
-      manualSwap: true,
-      animation: "spring",
-      autoScrollOnDrag: true,
-      // swapMode: "drop",
-      // enabled: true,
-      // dragAxis: "y",
-      // dragOnHold: true,
-    });
+      swapyRef.current.onSwap((event) => {
+        setSlotItemMap(event.newSlotItemMap.asArray);
+      });
+    }
 
-    swapyRef.current.onSwap((event) => {
-      setSlotItemMap(event.newSlotItemMap.asArray);
-    });
+    if (swapyRef.current) {
+      try {
+        utils.dynamicSwapy(
+          swapyRef.current,
+          todos,
+          "id",
+          newMap,
+          setSlotItemMap
+        );
+      } catch (error) {
+        console.error("Error in dynamicSwapy:", error);
+      }
+    }
 
     return () => {
-      swapyRef.current?.destroy();
+      if (swapyRef.current) {
+        swapyRef.current.destroy();
+        swapyRef.current = null;
+      }
     };
-  }, []);
+  }, [todos]);
+
   if (!todos.length) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -57,6 +74,7 @@ const TodoList = ({ todos, onDeleteTodo, onUpdateTodo }: Props) => {
       </div>
     );
   }
+
   return (
     <div className="container" ref={containerRef}>
       <ul className="items flex flex-col gap-2">
